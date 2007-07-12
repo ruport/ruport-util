@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'ostruct'
+require 'fileutils'
+
+begin
+  require 'rubygems'
+rescue LoadError
+end
+
+require 'ruport'
+require 'ruport/util'
+
+options = OpenStruct.new(:output => 'output.ods')
+
+opts = OptionParser.new do |opt|
+  ruby_version = "ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
+  ruport_util_version = "Ruport Util Version #{Ruport::Util::VERSION}"
+  ruport_version = "Ruport Version #{Ruport::VERSION}, on #{ruby_version}"
+  version = "#{ruport_util_version} - #{ruport_version}"
+
+  opt.banner = "Usage: csv2ods [ OPTIONS ] input.csv [ output.ods ]"
+  opt.define_head(version)
+
+  opt.separator ''
+  opt.separator 'Common options:'
+
+  opt.on_tail('-h', '--help', 'Show this message') do
+    puts opts
+    exit
+  end
+
+  opt.on_tail('-v', '--version', 'Show version') do
+    puts version
+    exit
+  end
+end
+
+opts.parse!(ARGV)
+
+input = ARGV.shift
+options.input = input if input
+output = ARGV.shift
+options.output = output if output
+
+unless options.input and options.output
+  puts opts
+  exit
+end
+
+ods = Table(options.input).to_ods(:tempfile => true)
+FileUtils.cp(ods.path, options.output)

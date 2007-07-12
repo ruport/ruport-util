@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require "fileutils"
+require "ruport/util/generator"
+include FileUtils
+
+if ARGV.empty?
+  puts "Usage: rope project_name"
+  exit
+end
+project = ARGV[0]
+
+Ruport::Generator.build(ARGV[0])
