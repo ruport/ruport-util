@@ -4,7 +4,7 @@ require 'net/smtp'
 class SampleReport < Ruport::Report
   renders_with Ruport::Renderer::Table
 
-  def generate
+  def renderable_data(format)
     Table(%w[not abc]) << %w[o r] << %w[one two] << %w[thr ee]
   end
 end
@@ -13,7 +13,7 @@ class MyReport < Ruport::Report
 
   attr_accessor :data
   
-  def generate
+  def renderable_data(format)
     data
   end
 
@@ -55,6 +55,14 @@ describe 'Writing Report to files' do
     file_mock(mode = 'w', filename = 'foo.csv', 
                           content = "not,abc\no,r\none,two\nthr,ee\n")
     @report.save_as(filename).should_not be_nil
+  end   
+  
+  it 'should yield the renderer object' do
+    file_mock(mode = 'w', filename = 'foo.csv', 
+                          content = "not,abc\no,r\none,two\nthr,ee\n")
+    @report.save_as(filename) do |r|
+      r.should be_an_instance_of(Ruport::Renderer::Table)
+    end
   end
 end
 

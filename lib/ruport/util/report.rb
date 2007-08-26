@@ -32,7 +32,7 @@ module Ruport
   #
   #     renders_as_grouping(:style => :inline)   
   #
-  #     def generate
+  #     def renderable_data(format)
   #       table = Table("foo.csv")
   #       Grouping(table, :by => "username")
   #     end  
@@ -81,9 +81,11 @@ module Ruport
         q.result
       end
     end
-
-    def renderable_data #:nodoc:
-      generate
+    
+    def renderable_data(format)
+       raise NotImplementedError, 
+          "You must implement renderable_data(format) if you wish to use as()
+          or save_as()"
     end
 
     alias_method :old_as, :as
@@ -95,16 +97,16 @@ module Ruport
       return output
     end
     
-    def save_as(filename,options={})
+    def save_as(filename,options={},&block)
       formats = { "csv" => ["w",:csv], "txt" => ["w",:text], 
                   "html" => ["w", :html], "pdf" => ["wb", :pdf ] }
       
       fo = filename =~ /.*\.(.*)/ && formats[$1]
       flags = options.delete(:flags)
       if fo
-        File.open(filename,flags || fo[0]) { |f| f << as(fo[1],options) }
+        File.open(filename,flags || fo[0]) { |f| f << as(fo[1],options,&block) }
       else
-        File.open(filename,flags || "w") { |f| f << as($1.to_sym,options) }
+        File.open(filename,flags || "w") { |f| f << as($1.to_sym,options,&block) }
       end
     end
 

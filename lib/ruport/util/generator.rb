@@ -80,14 +80,14 @@ module Ruport
     mkdir project        
     puts "creating directories.."
     %w[ test config output data data/models lib lib/reports 
-        lib/renderers templates sql log util ].each do |d|
+        lib/renderers sql util ].each do |d|
       m="#{project}/#{d}" 
       puts "  #{m}"
       mkdir(m)
     end
     
     puts "creating files.."
-    %w[reports helpers renderers].each { |f|
+    %w[reports helpers renderers templates].each { |f|
       m = "#{project}/lib/#{f}.rb"
       puts "  #{m}"
       touch(m)
@@ -175,7 +175,7 @@ REP = <<EOR
 require "lib/init"
 class #{class_name} < Ruport::Report
 
-  def renderable_data
+  def renderable_data(format)
 
   end
   
@@ -283,6 +283,7 @@ require "ruport"
 require "ruport/util"
 require "lib/helpers"
 require "config/environment" 
+require "lib/templates"
 END_INIT
 
 README = <<END_README
