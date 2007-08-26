@@ -8,11 +8,7 @@ module Ruport
     def self.add_report(*new_reports)
       self.reports |= new_reports
     end
-               
-    # Looks in reports first, then models.
-    # if there is a conflict, you are F'ed.
-    #
-    # just kidding, use models#find or reports#find
+
     def self.[](name)     
       (reports + models).find{|n| n.name == name }
     end

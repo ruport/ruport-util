@@ -22,8 +22,7 @@ module Ruport
     
     extend Forwardable
    
-    # Creates a new Mailer object. Optionally, you can select a mailer 
-    # specified by Ruport::Config.
+    # Creates a new Mailer object. Optionally, you can select a mailer by label
     #
     # Example:
     #
@@ -31,7 +30,7 @@ module Ruport
     #   a = Mailer.new :foo   # uses :foo mail config from Ruport::Config
     #
     def initialize( mailer_label=:default )
-      select_mailer(mailer_label); 
+      select_mailer(mailer_label)
       mail_object.from = @mailer.address if mail_object.from.to_s.empty?
       rescue
         raise "you need to specify a mailer to use"
@@ -55,20 +54,20 @@ module Ruport
       #                                 to 25.
       # <b><tt>:auth_type</tt></b>::    SMTP authorization method. Optional, 
       #                                 defaults to <tt>:plain</tt>.
-      # <b><tt>:mail_klass</tt></b>::   If you don't want to use the default 
+      # <b><tt>:mail_class</tt></b>::   If you don't want to use the default 
       #                                 <tt>MailFactory</tt> object, you can 
       #                                 pass another mailer to use here.
       #                               
       # Example (creating a mailer config):
-      #   mailer :alternate, :host => "mail.test.com", 
-      #                      :address => "test@test.com",
-      #                      :user => "test", 
-      #                      :password => "blinky"
-      #                      :auth_type => :cram_md5
+      #   add_mailer :alternate, :host => "mail.test.com", 
+      #                          :address => "test@test.com",
+      #                          :user => "test", 
+      #                          :password => "blinky"
+      #                          :auth_type => :cram_md5
       #
       # Example (retreiving a mailer config):
-      #   mail_conf = mailer(:alternate)  #=> <OpenStruct ..>
-      #   mail_conf.address               #=> test@test.com
+      #   mail_conf = mailers[:alternate]  #=> <OpenStruct ..>
+      #   mail_conf.address                #=> test@test.com
       #
       def add_mailer(name,options)
         mailers[name] = OpenStruct.new(options)
@@ -119,12 +118,12 @@ module Ruport
       @address    = @mailer.address
       @port       = @mailer.port       || 25
       @auth       = @mailer.auth_type  || :plain
-      @mail_klass = @mailer.mail_klass
+      @mail_class = @mailer.mail_class
     end
 
     def mail_object
       return @mail if @mail
-      return @mail ||= @mail_klass.new if @mail_klass
+      return @mail ||= @mail_class.new if @mail_class
       require "mailfactory"
       @mail ||= MailFactory.new
     end
