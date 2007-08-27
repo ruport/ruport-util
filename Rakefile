@@ -33,7 +33,7 @@ end
 
 spec = Gem::Specification.new do |spec|
   spec.name = "ruport-util"
-  spec.version = "0.7.3"
+  spec.version = "0.7.9999"
   spec.platform = Gem::Platform::RUBY
   spec.summary = "A set of tools and helper libs for Ruby Reports"
   spec.files =  Dir.glob("{example,lib,test,bin}/**/**/*") +
@@ -48,7 +48,7 @@ spec = Gem::Specification.new do |spec|
   spec.extra_rdoc_files = %w{INSTALL}
   spec.rdoc_options << '--title' << 'ruport-util Documentation' <<
                        '--main' << 'INSTALL' << '-q'
-  spec.add_dependency('ruport', ">=0.11.0")
+  spec.add_dependency('ruport', ">=1.1.9999")
   spec.add_dependency('scruffy', ">=0.2.2")
   spec.add_dependency('mailfactory',">=1.2.3")
   spec.add_dependency('rubyzip','>=0.9.1')
