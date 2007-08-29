@@ -3,7 +3,7 @@
 ruport-util provides a home for marooned former parts of Ruby Reports,
 and newer fringe ideas.
 
-Support as of 2007.06.07:
+Support as of 2007.08.28:
 
   * Basic Graphing (util/graph)
   * Report runner  (util/report)
@@ -20,7 +20,7 @@ See example/ for more information
 
 == Getting Ruport
 
-To use ruport-util, you'll need Ruport >= 0.12.0
+To use ruport-util >= 0.8.0, you'll need Ruport >= 1.2.0
 
   sudo gem install ruport -y
 
