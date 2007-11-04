@@ -73,6 +73,30 @@ module Ruport
 
       end
 
+      class Formatter::Gruff < Formatter
+
+        renders [:png,:jpg], :for => Renderer::Graph
+
+        def initialize
+          Ruport.quiet { require 'gruff' }
+        end
+
+        def build_graph
+          graph = ::Gruff::Line.new
+          graph.title = options.title
+          graph.labels = options.labels
+          data.each do |r|
+            graph.data(r.gid,r.to_a)
+          end
+
+          output << graph.to_blob(format.to_s)
+        end
+
+        # Save the output to a file.
+        def save_output(filename)
+          File.open(filename,"wb") {|f| f << output }
+        end
+      end
     end
   end
 
@@ -108,7 +132,7 @@ module Ruport
 end
 
 module Kernel
-  def Graph(x_labels, data=[])
+  def Graph(x_labels=[], data=[])
     Ruport::Data::Graph.new(:column_names => x_labels, :data => data,
                             :record_class => Ruport::Data::GraphData )
   end
@@ -134,6 +158,15 @@ end
 #   :data_file => "/home/sandal/build/amline/amline_data.xml",
 #   :template => :graph )
 
+# graph = Graph()
+# graph.graph([1, 2, 3, 4, 4, 3], "Apples")
+# graph.graph([4, 8, 7, 9, 8, 9], "Oranges")
+# graph.graph([2, 3, 1, 5, 6, 8], "Watermelon")
+# graph.graph([9, 9, 10, 8, 7, 9], "Peaches")
+# 
+# png = graph.as(:png, :title => "My Graph",
+#   :labels => { 0 => '2003', 2 => '2004', 4 => '2005' }, :data => graph,
+#   :file => 'new_graph.png')
 
 
 
