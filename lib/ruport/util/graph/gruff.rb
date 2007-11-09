@@ -1,20 +1,31 @@
 class Ruport::Formatter  
   module Graph    
+    
     class Gruff < Ruport::Formatter
 
       renders [:png,:jpg], :for => Ruport::Renderer::Graph
 
       def initialize
         Ruport.quiet { require 'gruff' }
+      end  
+      
+      def apply_template
+         options.min    = template.y_min
+         options.max    = template.y_max
+         options.width  = template.width
+         options.height = template.height
       end
 
-      def build_graph
-        graph = ::Gruff::Line.new
+      def build_graph   
+        graph = ::Gruff::Line.new("#{options.width || 800}x#{options.height || 600}")
         graph.title = options.title if options.title
         graph.labels = options.labels if options.labels
         data.each do |r|
           graph.data(r.gid,r.to_a)
-        end
+        end   
+        
+        graph.maximum_value = options.max if options.max
+        graph.minimum_value = options.min if options.min
 
         output << graph.to_blob(format.to_s)
       end

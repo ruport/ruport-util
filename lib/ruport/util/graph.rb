@@ -69,5 +69,5 @@ module Kernel
 end    
 
 require "ruport/util/graph/scruffy"
-require "ruport/util/graph/amline"  
+require "ruport/util/graph/amline"
 require "ruport/util/graph/gruff"

@@ -40,7 +40,9 @@ class Ruport::Formatter
         options.templated_settings_proc = lambda do |s|
           s.config do |c|
             c.values.y_left.max = template.y_max
-            c.values.y_right.max = template.y_max
+            c.values.y_right.max = template.y_max 
+            c.values.y_left.min = template.y_min
+            c.values.y_right.min = template.y_min
             c.width = template.width
             c.height = template.height
             c.legend.enabled = template.show_legend
@@ -155,6 +157,24 @@ class Amline
     def config
       yield @config.settings if block_given?
       @config.settings
+    end  
+    
+    def add_label(label,options)
+     xml = %Q{
+      <label>
+        <x>#{options[:x]}</x>                                                 
+        <y>#{options[:y]}20</y>                                   
+        <rotate>#{options[:rotate]}</rotate>                     
+        <width>#{options[:width]}</width>                
+        <align>#{options[:align]}</align>                       
+        <text_color>#{options[:text_color]}</text_color>             
+        <text_size>#{options[:text_size]}</text_size>               
+        <text>  
+          <![CDATA[#{label}]]>
+        </text>        
+      </label>
+    } 
+    @config.root.search("labels").append(xml)
     end
 
     def add_graph(gid)    

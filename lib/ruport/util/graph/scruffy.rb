@@ -48,8 +48,15 @@ class Ruport::Formatter
 
         output << @graph.render( 
           :size => [options.width||500, options.height||300],
-          :min_value => options[:min], :max_value => options[:max]
+          :min_value => options.min, :max_value => options.max
         )
+      end          
+      
+      def apply_template
+         options.min    = template.y_min
+         options.max    = template.y_max
+         options.width  = template.width
+         options.height = template.height
       end
   
       # Uses Scruffy::Graph#add to add a new line to the graph.

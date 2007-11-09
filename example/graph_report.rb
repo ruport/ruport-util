@@ -2,7 +2,7 @@ require "ruport"
 
 require "ruport/util"
 
-class GraphReport < Ruport::Report
+class GraphReport < Ruport::Report 
   
   renders_as_graph
   
@@ -13,8 +13,13 @@ class GraphReport < Ruport::Report
     return graph
   end
 
-end
+end                                
 
+Ruport::Formatter::Template.create(:graph) do |t|
+  t.y_max = 100
+end
+    
+# you need scruffy installed for svg, gruff for jpg / png
 GraphReport.generate do |r| 
-  r.as(:amline, :settings_file => "foo.xml", :data_file => "bar.xml") 
+  r.save_as("foo.svg", :template => :graph)
 end
