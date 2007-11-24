@@ -33,7 +33,7 @@ end
 
 spec = Gem::Specification.new do |spec|
   spec.name = "ruport-util"
-  spec.version = "0.10.0"
+  spec.version = "0.10.1"
   spec.platform = Gem::Platform::RUBY
   spec.summary = "A set of tools and helper libs for Ruby Reports"
   spec.files =  Dir.glob("{example,lib,test,bin}/**/**/*") +
