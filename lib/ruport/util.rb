@@ -1,6 +1,6 @@
 module Ruport
   module Util
-    VERSION = "0.10.1"
+    VERSION = "0.11.0"
 
     file = __FILE__
     file = File.readlink(file) if File.symlink?(file)
@@ -18,4 +18,5 @@ require "ruport/util/mailer"
 require "ruport/util/bench"
 require "ruport/util/generator"
 require "ruport/util/pdf/form"
-require "ruport/util/ods"
+require "ruport/util/ods" 
+require "ruport/util/query"

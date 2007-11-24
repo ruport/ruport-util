@@ -10,7 +10,7 @@ require "rake/gempackagetask"
 
 require 'spec/rake/spectask'
 
-task :default => [:wraptest]
+task :default => [:test]
 
 desc "Run all tests"
 Spec::Rake::SpecTask.new('test') do |t|
@@ -33,7 +33,7 @@ end
 
 spec = Gem::Specification.new do |spec|
   spec.name = "ruport-util"
-  spec.version = "0.10.1"
+  spec.version = "0.11.0"
   spec.platform = Gem::Platform::RUBY
   spec.summary = "A set of tools and helper libs for Ruby Reports"
   spec.files =  Dir.glob("{example,lib,test,bin}/**/**/*") +
