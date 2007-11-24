@@ -1,6 +1,6 @@
 require 'test/helper'       
 require 'ruport/util/graph/amline'    
-require 'hpricot'
+Ruport.quiet { testcase_requires 'hpricot' }
 
 describe "A simple traversal" do
 
