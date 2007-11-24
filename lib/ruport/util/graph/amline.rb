@@ -1,10 +1,11 @@
-require "rubygems"
-require "hpricot"
-
 class Ruport::Formatter  
   module Graph  
     class Amline < Ruport::Formatter
       renders :amline, :for => Ruport::Renderer::Graph
+
+      def initialize
+        Ruport.quiet { require "hpricot" }
+      end
 
       def build_graph
         generate_config_file
