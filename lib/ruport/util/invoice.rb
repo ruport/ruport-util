@@ -4,8 +4,6 @@ module Ruport
                
       required_option :customer_info,:company_info,:order_info,:comments
 
-      option :title
-      
       stage :invoice_headers,:invoice_body,:invoice_footer
       
       finalize :invoice

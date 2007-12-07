@@ -1,7 +1,14 @@
 begin
   require "rubygems"
+  gem "ruport", "=1.2.3" 
 rescue LoadError
   nil
+end   
+
+class Array
+  def to_table(columns)
+    Table(columns) { |t| each { |r| t << r }}   
+  end
 end
 
 require "spec"
