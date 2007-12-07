@@ -39,11 +39,11 @@ class Ruport::Formatter
   
   class PDF
     def draw_graph(graph, opts={})
-      x = opts[:x]
-      y = opts[:y]
-      width = opts[:width]
-      height = opts[:height]
-      g = graph.as(:jpg)
+      x = opts.delete(:x)
+      y = opts.delete(:y)
+      width = opts.delete(:width)
+      height = opts.delete(:height)
+      g = graph.as(:jpg, opts)
       info = ::PDF::Writer::Graphics::ImageInfo.new(g)
       
       # reduce the size of the image until it fits into the requested box
