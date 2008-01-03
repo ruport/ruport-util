@@ -63,8 +63,8 @@ class Ruport::Data::Table
 
     def get_table_from_ods(oo, options) #:nodoc:
       # Don't need to require 'roo' here because 
-      oo.default_sheet = oo.sheets.first
       options = {:has_column_names => true, :select_sheet => oo.sheets.first}.merge(options)        
+      oo.default_sheet = options[:select_sheet]
       start_row = options[:has_column_names] == true ? 2 : 1
 
       table = self.new(options) do |feeder|            

@@ -6,13 +6,20 @@ testcase_requires 'roo'
 
 describe 'Ruport::Data::TableFromODS' do
   before(:each) do
-    @ods_file_column_names = %w(Name Age DOB)
     @ods_file = 'test/samples/people.ods'
     @csv_file = 'test/samples/data.csv'
+    
+    @ods_file_column_names = %w(Name Age DOB)
     @rows = [ ['Andy',    27.0, Date.parse('01/20/1980')], 
               ['Bob',     26.0, Date.parse('02/11/1981')],
               ['Charlie', 20.0, Date.parse('03/14/1987')],
               ['David',   73.0, Date.parse('04/26/1997')] ]
+              
+    @ods_file_column_names2 = %w(Name Age Pet_Type)
+    @rows2 = [ ['Tigger', 3.0,  'Cat'], 
+               ['Chai',   4.0,  'Dog'],
+               ['Rusky',  6.0,  'Dog'],
+               ['Sam',    13.0, 'Dog'] ]            
   end
 
   # ==== File check ====
@@ -70,7 +77,7 @@ describe 'Ruport::Data::TableFromODS' do
   
   
   # ==== Ruport::Data::Table load check ====
-  it "table should be valid without column names loaded from ods file " do
+  it "table should be valid without column names loaded from ods file" do
     # Load data from ods file but do not load column headers.
     table = Ruport::Data::Table(@ods_file, {:has_column_names => false})
     table.should_not be_nil
@@ -83,15 +90,24 @@ describe 'Ruport::Data::TableFromODS' do
                      r.attributes.should == [0, 1, 2] }  
   end
   
-  it "table should be valid with column names loaded from ods file " do
+  it "table should be valid with column names loaded from ods file" do
     # Load data from ods file but do not load column headers.
     table = Ruport::Data::Table(@ods_file)
     table.should_not be_nil
     table.column_names.should == @ods_file_column_names
     
-    
     table.each { |r| r.to_a.should == @rows.shift
                      r.attributes.should == @ods_file_column_names }  
+  end  
+  
+  it "table should be valid with column names loaded from ods file using Sheet2" do
+    # Load data from ods file but do not load column headers.
+    table = Ruport::Data::Table(@ods_file, {:select_sheet => 'Sheet2'})
+    table.should_not be_nil
+    table.column_names.should == @ods_file_column_names2
+    
+    table.each { |r| r.to_a.should == @rows2.shift
+                     r.attributes.should == @ods_file_column_names2 }  
   end  
   
   it "should be valid if an Openoffice object is passed using parse_ods method" do
