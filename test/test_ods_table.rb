@@ -40,26 +40,26 @@ describe 'Ruport::Data::TableFromODS' do
   
   # ==== Constructor check ====
   it "shouldn't be nil if a ods file is passed" do
-    table = Ruport::Data::Table(@ods_file)
+    table = Table(@ods_file)
     table.should_not be_nil
   end  
   
   it "shouldn't be nil if a Openoffice object is passed" do
     oo = Openoffice.new(@ods_file)
     oo.default_sheet = oo.sheets.first
-    table = Ruport::Data::Table(oo) # This will be passed to the base Ruport::Data::Table class.
+    table = Table(oo) # This will be passed to the base Ruport::Data::Table class.
     table.should_not be_nil
   end
   
   it "shouldn't be nil if a Ruport::Data::Ruport::Data::Table parameter is passed" do
-    table = Ruport::Data::Table(@csv_file) # Pass cs file
+    table = Table(@csv_file) # Pass cs file
     table.should_not be_nil
   end  
   
   
   # ==== Constructor check with options params ====
   it "shouldn't be nil if a ods file is passed with options params" do
-    table = Ruport::Data::Table(@ods_file, {:has_column_names => false})
+    table = Table(@ods_file, {:has_column_names => false})
     table.should_not be_nil
   end  
   
@@ -71,7 +71,7 @@ describe 'Ruport::Data::TableFromODS' do
   end
   
   it "shouldn't be nil if a Ruport::Data::Ruport::Data::Table parameter is passed with options params" do
-    table = Ruport::Data::Table(@csv_file, {:has_column_names => false}) # Pass cs file
+    table = Table(@csv_file, {:has_column_names => false}) # Pass cs file
     table.should_not be_nil
   end  
   
@@ -79,7 +79,7 @@ describe 'Ruport::Data::TableFromODS' do
   # ==== Ruport::Data::Table load check ====
   it "table should be valid without column names loaded from ods file" do
     # Load data from ods file but do not load column headers.
-    table = Ruport::Data::Table(@ods_file, {:has_column_names => false})
+    table = Table(@ods_file, {:has_column_names => false})
     table.should_not be_nil
     table.column_names.should == [] 
     
@@ -92,7 +92,7 @@ describe 'Ruport::Data::TableFromODS' do
   
   it "table should be valid with column names loaded from ods file" do
     # Load data from ods file but do not load column headers.
-    table = Ruport::Data::Table(@ods_file)
+    table = Table(@ods_file)
     table.should_not be_nil
     table.column_names.should == @ods_file_column_names
     
@@ -102,7 +102,7 @@ describe 'Ruport::Data::TableFromODS' do
   
   it "table should be valid with column names loaded from ods file using Sheet2" do
     # Load data from ods file but do not load column headers.
-    table = Ruport::Data::Table(@ods_file, {:select_sheet => 'Sheet2'})
+    table = Table(@ods_file, {:select_sheet => 'Sheet2'})
     table.should_not be_nil
     table.column_names.should == @ods_file_column_names2
     
