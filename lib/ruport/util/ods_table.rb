@@ -32,6 +32,10 @@ class Ruport::Data::Table
     #   # Select sheet - default is the first sheet.
     #   table = Table.load_ods('myspreadsheet.ods', {:select_sheet => 1})
     #
+    #   # Start row - default is the first row. Use this to override where
+    #                 the first row should start.
+    #   table = Table.load_ods('myspreadsheet.ods', {:start_row => 1})
+    #
     def load_ods(ods_file, options={})
       get_table_from_ods_file(ods_file, options)
     end
@@ -49,6 +53,10 @@ class Ruport::Data::Table
     #   # Select sheet - default is the first sheet.
     #   table = Table.parse_ods(openoffice_object, {:select_sheet => 1})
     #
+    #   # Start row - default is the first row. Use this to override where
+    #                 the first row should start.
+    #   table = Table.parse_ods('myspreadsheet.ods', {:start_row => 1})    
+    #
     def parse_ods(ods_object, options={})
       get_table_from_ods(ods_object, options)
     end      
@@ -62,20 +70,28 @@ class Ruport::Data::Table
     end
 
     def get_table_from_ods(oo, options) #:nodoc:
-      # Don't need to require 'roo' here because 
-      options = {:has_column_names => true, :select_sheet => oo.sheets.first}.merge(options)        
+      options = {:has_column_names => true, 
+                 :select_sheet => oo.sheets.first,
+                 :start_row => 0}.merge(options)        
       oo.default_sheet = options[:select_sheet]
-      start_row = options[:has_column_names] == true ? 2 : 1
+      
+      options[:start_row] = options[:start_row].to_i + 1 unless options[:start_row].nil?      
+      start_row = options[:start_row]
 
+      raise 'start_row must be greater than or equal to zero' if options[:start_row].to_i < 0
+      
+      last_row_index_zero = oo.last_row - 1
+      raise "start_row must be less than or equal to #{last_row_index_zero}" if !oo.last_row.nil? and 
+                                                                                (options[:start_row].to_i > oo.last_row)
+                                                                                
       table = self.new(options) do |feeder|            
         
-        # This is fine because they should all be strings
-        feeder.data.column_names = oo.row(1) if options[:has_column_names] == true
+        if options[:has_column_names] == true
+          feeder.data.column_names = oo.row(start_row) 
+          start_row = start_row + 1
+        end
         
-        # don't loop through the rows if they are none
         unless oo.last_row.nil?
-          # Loop through and grab each cell that way the data types
-          # are captured as well.
           start_row.upto(oo.last_row) do |row|
             tempArr = []
             1.upto(oo.last_column) do |col|
@@ -87,19 +103,18 @@ class Ruport::Data::Table
         
       end
 
-      return table        
+      return table     
     end
 
-  end # End FromODS
+  end
 
   extend FromODS
 
-end # End class Table
+end
     
 
 module Kernel
   
-  # Use Ruport's original Table method if this Table method is not needed.
   alias :RuportTableMethod :Table
   
   # Updates the Ruport interface for creating Data::Tables with
