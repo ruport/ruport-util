@@ -29,6 +29,7 @@ describe "A Query" do
       :plain      => Ruport::Query.new(@sql[0]),
       :sourced    => Ruport::Query.new(@sql[0], :source        => :alternative),
       :paramed    => Ruport::Query.new(@sql[0], :params        => [ 42 ]),
+      :paramed_ar => Ruport::Query.new([@sql[0], 69, 777]),
       :raw        => Ruport::Query.new(@sql[0], :row_type      => :raw),
       :resultless => Ruport::Query.new(@sql[1]),
       :multi      => Ruport::Query.new(@sql[2]),
@@ -52,9 +53,16 @@ describe "A Query" do
         query.execute.should == nil
       end
    
-      it "should allow excute to accept parameters" do
+      it "should allow execute to accept parameters" do
         query = @query[:paramed]
         setup_mock_dbi(1, :params => [ 42 ])
+
+        query.execute.should == nil   
+      end  
+   
+      it "should allow execute to accept parameters (ActiveRecord style)" do
+        query = @query[:paramed_ar]
+        setup_mock_dbi(1, :params => [ 69, 777 ])
 
         query.execute.should == nil   
       end  

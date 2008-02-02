@@ -1,10 +1,11 @@
+require "rubygems"
 require "ruport"
 require "ruport/util"
 
 class SampleReport < Ruport::Report
   include Invoice
 
-  def generate
+  def renderable_data(format)
     render_invoice do |i|
       i.data = Table("Item Number","Description","Price") { |t|
         t << %w[101 Erlang\ The\ Movie $1000.00]
@@ -25,4 +26,4 @@ class SampleReport < Ruport::Report
 end
 
 a = SampleReport.new
-File.open("invoice.pdf","wb") { |f| f << a.generate }
+a.save_as("invoice.pdf")

@@ -22,7 +22,7 @@ module Ruport
         end
 
         def build_customer_header
-          move_cursor -5
+          move_cursor(-5)
           rounded_text_box(options.customer_info) { |o| 
               o.radius    = 3
               o.width     = options.header_width || 200
@@ -99,7 +99,7 @@ module Ruport
 
               horizontal_line left_boundary + 20, right_boundary - 25
 
-              move_cursor -10 
+              move_cursor(-10)
 
               add_text(options.comments,:justification => :center, 
                                         :left => 0, :right => 0 )

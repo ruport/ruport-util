@@ -66,13 +66,24 @@ module Ruport
     #   # explicitly use a file, even if it doesn't end in .sql
     #   Ruport::Query.new(:file => "foo")
     #
+    #   # query with parameter substitution
+    #   Ruport::Query.new("select * from fo where bar=?", :params => [1234])
+    #   Ruport::Query.new(:file => "foo", :params => [1234])
+    #
+    #   # query with parameter substitution (ActiveRecord style)
+    #   Ruport::Query.new(["select * from fo where bar=?", 1234])
+    #
     def initialize(sql, options={})   
       if sql.kind_of?(Hash)  
         options = { :source => :default }.merge(sql)   
         sql = options[:file] || options[:string]
       else 
+        if sql.kind_of?(Array)
+          options[:params] = sql[1..-1]
+          sql = sql.first
+        end
         options = { :source => :default, :string => sql }.merge(options)
-        options[:file] = sql if sql =~ /.sql$/    
+        options[:file] = sql if sql =~ /\.sql$/    
       end                                                 
       origin = options[:file] ? :file : :string      
       
