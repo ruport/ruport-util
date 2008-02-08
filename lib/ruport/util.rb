@@ -1,6 +1,6 @@
 module Ruport
   module Util
-    VERSION = "0.32.0"
+    VERSION = "0.13.1"
 
     file = __FILE__
     file = File.readlink(file) if File.symlink?(file)
