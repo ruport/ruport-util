@@ -48,7 +48,7 @@ spec = Gem::Specification.new do |spec|
   spec.extra_rdoc_files = %w{INSTALL}
   spec.rdoc_options << '--title' << 'ruport-util Documentation' <<
                        '--main' << 'INSTALL' << '-q'
-  spec.add_dependency('ruport', ">=1.2.3")
+  spec.add_dependency('ruport', ">=1.4.0")
   spec.add_dependency('mailfactory',">=1.2.3")
   spec.add_dependency('rubyzip','>=0.9.1')
   spec.author = "Gregory Brown"
