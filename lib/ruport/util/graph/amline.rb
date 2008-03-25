@@ -1,7 +1,7 @@
 class Ruport::Formatter  
   module Graph  
     class Amline < Ruport::Formatter
-      renders :amline, :for => Ruport::Renderer::Graph
+      renders :amline, :for => Ruport::Controller::Graph
 
       def initialize
         Ruport.quiet { require "hpricot" }

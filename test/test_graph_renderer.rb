@@ -3,7 +3,7 @@ require 'test/helper'
 Ruport.quiet { testcase_requires 'scruffy' }
 
 class MockGraphPlugin < Ruport::Formatter
-  renders :mock, :for => Ruport::Renderer::Graph
+  renders :mock, :for => Ruport::Controller::Graph
   def prepare_graph 
     output << "prepare"
   end
@@ -17,7 +17,7 @@ end
 
 describe 'Graph Renderer' do
   before :all do
-    @graph = Ruport::Renderer::Graph
+    @graph = Ruport::Controller::Graph
     @data = Graph(%w[a b c],[[1,2,3],[4,5,6]])
   end
 

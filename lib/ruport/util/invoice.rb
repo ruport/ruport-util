@@ -1,6 +1,6 @@
-module Ruport
-  class Renderer #:nodoc:
-    class Invoice < Ruport::Renderer 
+module Ruport     
+  class Controller #:nodoc:
+    class Invoice < Ruport::Controller 
                
       required_option :customer_info,:company_info,:order_info,:comments
 
@@ -73,7 +73,7 @@ module Ruport
       class PDF < Ruport::Formatter::PDF
         
         include InvoiceHelpers
-        renders :pdf, :for => Renderer::Invoice
+        renders :pdf, :for => Controller::Invoice
 
         def build_invoice_headers
           build_company_header

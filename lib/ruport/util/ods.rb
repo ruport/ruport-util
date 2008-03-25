@@ -8,7 +8,7 @@ module Ruport
   class Formatter::ODS < Formatter
     BLANK_ODS = File.join(Ruport::Util::BASEDIR, 'example', 'data', 'blank.ods')
 
-    renders :ods, :for => [ Renderer::Row, Renderer::Table]
+    renders :ods, :for => [ Controller::Row, Controller::Table]
 
     def prepare_table
       output << %{<?xml version="1.0" encoding="UTF-8"?>
@@ -30,11 +30,11 @@ module Ruport
     end
 
     def build_table_body
-      render_data_by_row
+       data.each { |r| build_row(r) }
     end
 
-    def build_row
-      table_row{ build_cells(data.to_a) }
+    def build_row(row=data)
+      table_row{ build_cells(row.to_a) }
     end
 
     def table_row

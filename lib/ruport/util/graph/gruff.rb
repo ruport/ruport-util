@@ -3,7 +3,7 @@ class Ruport::Formatter
     
     class Gruff < Ruport::Formatter
 
-      renders [:png,:jpg], :for => Ruport::Renderer::Graph
+      renders [:png,:jpg], :for => Ruport::Controller::Graph
 
       def initialize
         Ruport.quiet { require 'gruff' }

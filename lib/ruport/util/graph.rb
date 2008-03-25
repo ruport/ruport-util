@@ -1,29 +1,22 @@
-# renderer/graph.rb
+# graph.rb
 # Generalized graphing support for Ruby Reports
 #
 # Written by Gregory Brown, Copright December 2006, All Rights Reserved.
 #
 # This is free software.  See LICENSE and COPYING for details.
 #
-begin
-  require "rubygems"
-  gem "ruport", ">= 1.2.2"
-rescue LoadError
-  nil
-end    
-
 module Ruport
 
-  module Renderer::Hooks
+  module Controller::Hooks
     module ClassMethods
       def renders_as_graph(options={})
-        renders_with Ruport::Renderer::Graph, options
+        renders_with Ruport::Controller::Graph, options
       end
     end
   end
   
-  class Renderer
-    class Graph < Renderer
+  class Controller
+    class Graph < Controller
        
       prepare :graph 
       stage :graph   

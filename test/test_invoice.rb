@@ -2,13 +2,13 @@ require 'test/helper'
 
 describe 'Invoice' do
   before :all do
-    @invoice = Ruport::Renderer::Invoice
+    @invoice = Ruport::Controller::Invoice
     @data = Table(%w[a b c]) << [1,2,3]
   end
 
   it 'should raise if the required options are not set' do
     lambda{ @invoice.render_pdf }.
-      should raise_error(Ruport::Renderer::RequiredOptionNotSet)
+      should raise_error(Ruport::Controller::RequiredOptionNotSet)
   end
 
   it "shouldn't raise if options are given correct in hash form" do

@@ -84,7 +84,7 @@ class Ruport::Formatter
   # * build_graph
   # * finalize_graph
     class OFC < Ruport::Formatter
-        renders :ofc, :for => Ruport::Renderer::Graph
+        renders :ofc, :for => Ruport::Controller::Graph
         
       # Attribute of the OpenFlashChart object
         attr_reader :graph

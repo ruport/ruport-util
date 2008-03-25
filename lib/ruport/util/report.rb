@@ -44,7 +44,7 @@ module Ruport
   #
   class Report   
     extend Forwardable
-    include Renderer::Hooks
+    include Controller::Hooks
         
     # This is a simplified interface to Ruport::Query.
     #

@@ -3,7 +3,7 @@ require 'tmpdir'
 require 'zip/zip'
 
 module Ruport
-  # This class provides Excel output for Ruport's Table renderers.
+  # This class provides Excel output for Ruport's Table controllers.
   # It can export to format :
   #  * Excel 2003 (use spreadsheet/excel gems)
   #  * Excel 2003 XML
@@ -17,7 +17,7 @@ module Ruport
   #       * xlsxml => Excel 2003 XML
   #
   class Formatter::XLS < Formatter
-    renders :xls, :for => [ Renderer::Row, Renderer::Table]
+    renders :xls, :for => [Controller::Row, Controller::Table]
 
     def initialize
       Ruport.quiet {
@@ -81,7 +81,7 @@ module Ruport
   # Excel 2007 OpenXML
   class Formatter::XLSX < Formatter
     BLANK_XLSX = File.join(Ruport::Util::BASEDIR, 'example', 'data', 'blank.xlsx')
-    renders :xlsx, :for => [ Renderer::Row, Renderer::Table]
+    renders :xlsx, :for => [ Controller::Row, Controller::Table]
 
     def initialize
     end
@@ -219,7 +219,7 @@ module Ruport
   
   # Excel 2003 XML
   class Formatter::XLSXML < Formatter
-    renders :xlsxml, :for => [ Renderer::Row, Renderer::Table]
+    renders :xlsxml, :for => [ Controller::Row, Controller::Table]
    
     def prepare_table
      output << %{<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>

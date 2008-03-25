@@ -2,7 +2,7 @@ class Ruport::Formatter
   module Graph
     class Scruffy < Ruport::Formatter
 
-      renders :svg, :for => Ruport::Renderer::Graph
+      renders :svg, :for => Ruport::Controller::Graph
 
       # a hash of Scruffy themes.
       #

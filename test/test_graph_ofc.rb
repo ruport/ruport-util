@@ -6,16 +6,16 @@ require "ruport/util/graph/o_f_c"
 
 describe 'Graph OpenFlashCharts' do
   before :all do
-     @renderer = Ruport::Renderer::Graph
+     @controller = Ruport::Controller::Graph
   end
 
   it 'Render Bar chart' do
-    @renderer = Ruport::Renderer::Graph
-    @renderer.should_not be_nil
+    @controller = Ruport::Controller::Graph
+    @controller.should_not be_nil
     @table = Table(%w(name))
     @table << [[3,2,6,7,1,3,2,7,9,1,15,14]]
     @table.should_not be_nil
-    @report = @renderer.render(:ofc, :data => @table, 
+    @report = @controller.render(:ofc, :data => @table, 
 		:chart_types => [[:bar_glass, 50, '#9933CC', '#8010A0', 'PAGE VIEWS', 10]],
 		:x_labels => %w(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec),
                 :title => 'Page views By Visitor',
@@ -37,15 +37,15 @@ describe 'Graph OpenFlashCharts' do
   end
   
   it 'Render Multiline' do
-    @renderer = Ruport::Renderer::Graph
+    @controller = Ruport::Controller::Graph
     @table = Table(%w(name))
     @table << [(1..12).to_a.map{|x| x * 1.3}]
     @table << [(1..12).to_a.map{|x| Math.sin(x) + 3}]
     @table << [(1..6).to_a + (1..6).to_a.reverse]
     @table << [(1..2).to_a + (1..2).to_a.reverse + (3..8).to_a]
-    @renderer.should_not be_nil
+    @controller.should_not be_nil
     @table.should_not be_nil
-    @report = @renderer.render(:ofc, :data => @table, 
+    @report = @controller.render(:ofc, :data => @table, 
 		:chart_types => [[:line, 2, '#9933CC', 'Page Views', 12],
 				[:area_hollow, 2, 3, 25, '#CC3399', 'Visitors', 12],
                                 [:line_dot, 3,5,'0xCC3399', 'Downloads', 12],
@@ -70,12 +70,12 @@ describe 'Graph OpenFlashCharts' do
   end
   
   it 'Render Pie' do
-    @renderer = Ruport::Renderer::Graph
+    @controller = Ruport::Controller::Graph
     @table = Table(%w(name))
     @table << [(1..12).to_a.map{|x| x * 1.3}]
-    @renderer.should_not be_nil
+    @controller.should_not be_nil
     @table.should_not be_nil
-    @report = @renderer.render(:ofc, :data => @table, 
+    @report = @controller.render(:ofc, :data => @table, 
 		:chart_types => [[:pie, 80, '#9933CC', '#8010A0']],
 		:x_labels => %w(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec),
                 :pie_slice_colors => ['#d01f3c','#356aa0','#C79810'])
