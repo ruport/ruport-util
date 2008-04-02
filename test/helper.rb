@@ -1,6 +1,6 @@
 begin
   require "rubygems"
-  gem "ruport", "=1.5.0" 
+  gem "ruport", "=1.6.0" 
 rescue LoadError
   nil
 end   
