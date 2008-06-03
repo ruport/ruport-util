@@ -1,7 +1,7 @@
 require "ruport"
 require "ruport/util"
 
-class SimpleForm < Ruport::Renderer
+class SimpleForm < Ruport::Controller
 
   stage :form_header, :form_body
   finalize :form
@@ -38,9 +38,10 @@ class SimpleForm < Ruport::Renderer
 
 end
 
-puts SimpleForm.render_pdf { |r|
-  r.name = "Gregory Brown"
-  r.userid = "sandal"
-  r.fruit = :banana
-  r.email = "gregory.t.brown@gmail.com"
-}
+SimpleForm.render_pdf(
+  :name   => "Gregory Brown",
+  :userid => "sandal",
+  :fruit  => :banana,
+  :email  => "gregory.t.brown@gmail.com",
+  :file   => "form.pdf"
+)
